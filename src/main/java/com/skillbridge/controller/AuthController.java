@@ -1,5 +1,6 @@
 package com.skillbridge.controller;
 import com.skillbridge.model.User;
+import com.skillbridge.security.JwtUtil;
 import com.skillbridge.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import com.skillbridge.dto.LoginRequest;
@@ -18,12 +19,13 @@ public class AuthController {
         return userService.registerUser(user);
     }
     @PostMapping("/login")
-    public User login(@RequestBody LoginRequest request) {
+    public String login(@RequestBody LoginRequest request) {
 
-        return userService.loginUser(
+        User user = userService.loginUser(
                 request.getEmail(),
                 request.getPassword()
         );
 
+        return JwtUtil.generateToken(user.getEmail());
     }
 }
