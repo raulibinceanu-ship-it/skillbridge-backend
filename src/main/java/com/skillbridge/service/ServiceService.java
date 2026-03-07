@@ -27,4 +27,18 @@ public class ServiceService {
     public List<Service> getServicesByFreelancer(Long freelancerId) {
         return serviceRepository.findByFreelancerId(freelancerId);
     }
+    public Service updateService(Long id, Service updatedService) {
+
+        Service service = serviceRepository.findById(id).orElseThrow();
+
+        service.setTitle(updatedService.getTitle());
+        service.setDescription(updatedService.getDescription());
+        service.setPrice(updatedService.getPrice());
+        service.setCategory(updatedService.getCategory());
+
+        return serviceRepository.save(service);
+    }
+    public void deleteService(Long id) {
+        serviceRepository.deleteById(id);
+    }
 }

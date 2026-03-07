@@ -26,12 +26,17 @@ public class ServiceController {
         return serviceService.getAllServices();
     }
 
-    @GetMapping("/{id}")
-    public Service getServiceById(@PathVariable Long id) {
-        return serviceService.getServiceById(id);
+    @PutMapping("/{id}")
+    public Service updateService(@PathVariable Long id, @RequestBody Service service) {
+        return serviceService.updateService(id, service);
     }
     @GetMapping("/freelancer/{id}")
     public List<Service> getServicesByFreelancer(@PathVariable Long id) {
         return serviceService.getServicesByFreelancer(id);
     }
+    @DeleteMapping("/{id}")
+    public void deleteService(@PathVariable Long id) {
+        serviceService.deleteService(id);
+    }
+
 }
