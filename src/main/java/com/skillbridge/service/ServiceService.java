@@ -24,4 +24,7 @@ public class ServiceService {
     public Service getServiceById(Long id) {
         return serviceRepository.findById(id).orElseThrow();
     }
+    public List<Service> getServicesByFreelancer(Long freelancerId) {
+        return serviceRepository.findByFreelancerId(freelancerId);
+    }
 }

@@ -30,4 +30,8 @@ public class ServiceController {
     public Service getServiceById(@PathVariable Long id) {
         return serviceService.getServiceById(id);
     }
+    @GetMapping("/freelancer/{id}")
+    public List<Service> getServicesByFreelancer(@PathVariable Long id) {
+        return serviceService.getServicesByFreelancer(id);
+    }
 }
