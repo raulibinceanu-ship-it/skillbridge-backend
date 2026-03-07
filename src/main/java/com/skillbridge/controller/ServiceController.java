@@ -17,8 +17,14 @@ public class ServiceController {
     }
 
     @PostMapping
-    public Service createService(@RequestBody Service service) {
-        return serviceService.createService(service);
+    public Service createService(
+            @RequestBody Service service,
+            @RequestHeader("Authorization") String authHeader
+    ) {
+
+        String token = authHeader.replace("Bearer ", "");
+
+        return serviceService.createService(service, token);
     }
 
     @GetMapping
