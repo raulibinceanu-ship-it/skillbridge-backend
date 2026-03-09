@@ -16,7 +16,7 @@ public class JwtUtil {
     private static final SecretKey SECRET_KEY =
             Keys.hmacShaKeyFor("mysupersecretkeymysupersecretkey123456".getBytes());
 
-    public String generateToken(String email) {
+    public static String generateToken(String email) {
 
         return Jwts.builder()
                 .setSubject(email)
