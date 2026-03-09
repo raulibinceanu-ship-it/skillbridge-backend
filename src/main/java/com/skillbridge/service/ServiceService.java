@@ -63,4 +63,20 @@ public class ServiceService {
     public void deleteService(Long id) {
         serviceRepository.deleteById(id);
     }
+    public List<Service> getMyServices(String token) {
+
+        String email = jwtUtil.extractEmail(token);
+
+        User freelancer = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return serviceRepository.findByFreelancerId(freelancer.getId());
+    }
+    public List<Service> getServicesByCategory(String category) {
+        return serviceRepository.findByCategory(category);
+
+    }
+    public List<Service> getServicesByMaxPrice(double price) {
+        return serviceRepository.findByPriceLessThanEqual(price);
+    }
 }
