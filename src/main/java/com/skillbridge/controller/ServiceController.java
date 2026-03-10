@@ -61,4 +61,8 @@ public class ServiceController {
     public List<Service> getServicesByMaxPrice(@PathVariable double price) {
         return serviceService.getServicesByMaxPrice(price);
     }
+    @GetMapping("/{id}")
+    public Service getServiceById(@PathVariable Long id) {
+        return serviceService.getServiceById(id);
+    }
 }
