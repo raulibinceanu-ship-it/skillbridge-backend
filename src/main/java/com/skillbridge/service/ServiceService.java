@@ -79,4 +79,20 @@ public class ServiceService {
     public List<Service> getServicesByMaxPrice(double price) {
         return serviceRepository.findByPriceLessThanEqual(price);
     }
+
+    public List<Service> getServicesByToken(String token) {
+        return List.of();
+    }
+    public List<Service> filterServices(String category, Double maxPrice) {
+
+        if (category != null) {
+            return serviceRepository.findByCategory(category);
+        }
+
+        if (maxPrice != null) {
+            return serviceRepository.findByPriceLessThanEqual(maxPrice);
+        }
+
+        return serviceRepository.findAll();
+    }
 }
