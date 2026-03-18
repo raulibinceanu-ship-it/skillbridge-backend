@@ -22,9 +22,7 @@ public class ServiceController {
             @RequestBody Service service,
             @RequestHeader("Authorization") String authHeader
     ) {
-
         String token = authHeader.replace("Bearer ", "");
-
         return serviceService.createService(service, token);
     }
 
@@ -37,37 +35,43 @@ public class ServiceController {
     public Service updateService(@PathVariable Long id, @RequestBody Service service) {
         return serviceService.updateService(id, service);
     }
+
     @GetMapping("/freelancer/{id}")
     public List<Service> getServicesByFreelancer(@PathVariable Long id) {
         return serviceService.getServicesByFreelancer(id);
     }
+
     @DeleteMapping("/{id}")
     public void deleteService(@PathVariable Long id) {
         serviceService.deleteService(id);
     }
+
     @GetMapping("/my-services")
     public List<Service> getMyServices(@RequestHeader("Authorization") String token) {
-
         token = token.replace("Bearer ", "");
         return serviceService.getServicesByToken(token);
     }
+
     @GetMapping("/category/{category}")
     public List<Service> getServicesByCategory(@PathVariable String category) {
         return serviceService.getServicesByCategory(category);
     }
+
     @GetMapping("/price/{price}")
     public List<Service> getServicesByMaxPrice(@PathVariable double price) {
         return serviceService.getServicesByMaxPrice(price);
     }
-    @GetMapping("/{id}")
-    public Service getServiceById(@PathVariable Long id) {
-        return serviceService.getServiceById(id);
-    }
+
     @GetMapping("/filter")
     public List<Service> filterServices(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Double maxPrice
     ) {
         return serviceService.filterServices(category, maxPrice);
+    }
+
+    @GetMapping("/{id}")
+    public Service getServiceById(@PathVariable Long id) {
+        return serviceService.getServiceById(id);
     }
 }
