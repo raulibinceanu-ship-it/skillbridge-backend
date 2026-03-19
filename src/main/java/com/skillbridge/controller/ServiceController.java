@@ -1,5 +1,6 @@
 package com.skillbridge.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.skillbridge.model.Service;
 import com.skillbridge.service.ServiceService;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/services")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ServiceController {
 
     private final ServiceService serviceService;
@@ -31,25 +32,25 @@ public class ServiceController {
         return serviceService.getAllServices();
     }
 
-    @PutMapping("/{id}")
-    public Service updateService(@PathVariable Long id, @RequestBody Service service) {
-        return serviceService.updateService(id, service);
-    }
+    @GetMapping("/my-services")
+    public List<Service> getMyServices(@RequestHeader("Authorization") String token) {
 
-    @GetMapping("/freelancer/{id}")
-    public List<Service> getServicesByFreelancer(@PathVariable Long id) {
-        return serviceService.getServicesByFreelancer(id);
+        System.out.println("TOKEN RAW: " + token);
+
+        if (token == null || token.isEmpty()) {
+            throw new RuntimeException("Token mancante");
+        }
+
+        token = token.replace("Bearer ", "");
+
+        System.out.println("TOKEN CLEAN: " + token);
+
+        return serviceService.getMyServices(token);
     }
 
     @DeleteMapping("/{id}")
     public void deleteService(@PathVariable Long id) {
         serviceService.deleteService(id);
-    }
-
-    @GetMapping("/my-services")
-    public List<Service> getMyServices(@RequestHeader("Authorization") String token) {
-        token = token.replace("Bearer ", "");
-        return serviceService.getServicesByToken(token);
     }
 
     @GetMapping("/category/{category}")
@@ -68,10 +69,5 @@ public class ServiceController {
             @RequestParam(required = false) Double maxPrice
     ) {
         return serviceService.filterServices(category, maxPrice);
-    }
-
-    @GetMapping("/{id}")
-    public Service getServiceById(@PathVariable Long id) {
-        return serviceService.getServiceById(id);
     }
 }

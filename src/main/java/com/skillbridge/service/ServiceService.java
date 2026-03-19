@@ -40,52 +40,35 @@ public class ServiceService {
         return serviceRepository.findAll();
     }
 
-    public Service getServiceById(Long id) {
-        return serviceRepository.findById(id).orElseThrow();
-    }
-
-    public List<Service> getServicesByFreelancer(Long freelancerId) {
-        return serviceRepository.findByFreelancerId(freelancerId);
-    }
-
-    public Service updateService(Long id, Service updatedService) {
-
-        Service service = serviceRepository.findById(id).orElseThrow();
-
-        service.setTitle(updatedService.getTitle());
-        service.setDescription(updatedService.getDescription());
-        service.setPrice(updatedService.getPrice());
-        service.setCategory(updatedService.getCategory());
-
-        return serviceRepository.save(service);
-    }
-
-    public void deleteService(Long id) {
-        serviceRepository.deleteById(id);
-    }
     public List<Service> getMyServices(String token) {
 
+        System.out.println("TOKEN IN SERVICE: " + token);
+
         String email = jwtUtil.extractEmail(token);
+
+        System.out.println("EMAIL ESTRATTA: " + email);
 
         User freelancer = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return serviceRepository.findByFreelancerId(freelancer.getId());
     }
+
+    public void deleteService(Long id) {
+        serviceRepository.deleteById(id);
+    }
+
     public List<Service> getServicesByCategory(String category) {
         return serviceRepository.findByCategory(category);
-
     }
+
     public List<Service> getServicesByMaxPrice(double price) {
         return serviceRepository.findByPriceLessThanEqual(price);
     }
 
-    public List<Service> getServicesByToken(String token) {
-        return List.of();
-    }
     public List<Service> filterServices(String category, Double maxPrice) {
 
-        if (category != null) {
+        if (category != null && !category.isEmpty()) {
             return serviceRepository.findByCategory(category);
         }
 
