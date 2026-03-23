@@ -78,4 +78,8 @@ public class ServiceService {
 
         return serviceRepository.findAll();
     }
+    public Service getServiceById(Long id) {
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+    }
 }

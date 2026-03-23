@@ -70,4 +70,8 @@ public class ServiceController {
     ) {
         return serviceService.filterServices(category, maxPrice);
     }
+    @GetMapping("/{id}")
+    public Service getServiceById(@PathVariable Long id) {
+        return serviceService.getServiceById(id);
+    }
 }
