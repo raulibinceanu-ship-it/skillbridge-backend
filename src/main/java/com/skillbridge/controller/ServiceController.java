@@ -78,4 +78,13 @@ public class ServiceController {
     public Service getServiceById(@PathVariable Long id) {
         return serviceService.getServiceById(id);
     }
+    @PutMapping("/{id}")
+    public Service updateService(
+            @PathVariable Long id,
+            @RequestBody Service service,
+            @RequestHeader("Authorization") String token
+    ) {
+        token = token.replace("Bearer ", "");
+        return serviceService.updateService(id, service, token);
+    }
 }

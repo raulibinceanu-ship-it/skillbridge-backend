@@ -21,6 +21,8 @@ public class Service {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "freelancer_id")
     private User freelancer;
@@ -74,4 +76,12 @@ public class Service {
     public void setFreelancer(User freelancer) {
         this.freelancer = freelancer;
     }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }

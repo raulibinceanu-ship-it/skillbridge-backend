@@ -102,4 +102,26 @@ public class ServiceService {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Service not found"));
     }
+    public Service updateService(Long id, Service updatedService, String token) {
+
+        String email = jwtUtil.extractEmail(token);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+
+        if (!service.getFreelancer().getId().equals(user.getId())) {
+            throw new RuntimeException("Not authorized");
+        }
+
+        service.setTitle(updatedService.getTitle());
+        service.setDescription(updatedService.getDescription());
+        service.setPrice(updatedService.getPrice());
+        service.setCategory(updatedService.getCategory());
+        service.setImageUrl(updatedService.getImageUrl());
+
+        return serviceRepository.save(service);
+    }
 }
