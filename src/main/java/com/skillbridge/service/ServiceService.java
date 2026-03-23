@@ -54,7 +54,20 @@ public class ServiceService {
         return serviceRepository.findByFreelancerId(freelancer.getId());
     }
 
-    public void deleteService(Long id) {
+    public void deleteService(Long id, String token) {
+
+        String email = jwtUtil.extractEmail(token);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+
+        if (!service.getFreelancer().getId().equals(user.getId())) {
+            throw new RuntimeException("Not authorized");
+        }
+
         serviceRepository.deleteById(id);
     }
 

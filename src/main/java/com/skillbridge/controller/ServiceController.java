@@ -49,8 +49,12 @@ public class ServiceController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteService(@PathVariable Long id) {
-        serviceService.deleteService(id);
+    public void deleteService(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token
+    ) {
+        token = token.replace("Bearer ", "");
+        serviceService.deleteService(id, token);
     }
 
     @GetMapping("/category/{category}")
