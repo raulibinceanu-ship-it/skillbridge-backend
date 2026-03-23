@@ -81,6 +81,13 @@ public class ServiceService {
 
     public List<Service> filterServices(String category, Double maxPrice) {
 
+        if (category != null && !category.isEmpty() &&
+                maxPrice != null) {
+
+            return serviceRepository
+                    .findByCategoryAndPriceLessThanEqual(category, maxPrice);
+        }
+
         if (category != null && !category.isEmpty()) {
             return serviceRepository.findByCategory(category);
         }
