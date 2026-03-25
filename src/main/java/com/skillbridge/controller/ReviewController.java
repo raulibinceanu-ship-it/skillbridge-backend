@@ -1,6 +1,8 @@
 package com.skillbridge.controller;
+
 import com.skillbridge.model.Review;
 import com.skillbridge.repository.ReviewRepository;
+import com.skillbridge.repository.ServiceRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,18 +13,27 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewRepository reviewRepository;
+    private final ServiceRepository serviceRepository;
 
-    public ReviewController(ReviewRepository reviewRepository) {
+    public ReviewController(ReviewRepository reviewRepository,
+                            ServiceRepository serviceRepository) {
         this.reviewRepository = reviewRepository;
+        this.serviceRepository = serviceRepository;
     }
 
-    @PostMapping
-    public Review createReview(@RequestBody Review review) {
+    @PostMapping("/{serviceId}")
+    public Review createReview(@PathVariable Long serviceId,
+                               @RequestBody Review review) {
+
+        review.setService(
+                serviceRepository.findById(serviceId).orElseThrow()
+        );
+
         return reviewRepository.save(review);
     }
 
-    @GetMapping("/service/{id}")
-    public List<Review> getReviews(@PathVariable Long id) {
-        return reviewRepository.findByServiceId(id);
+    @GetMapping("/{serviceId}")
+    public List<Review> getReviews(@PathVariable Long serviceId) {
+        return reviewRepository.findByServiceId(serviceId);
     }
 }

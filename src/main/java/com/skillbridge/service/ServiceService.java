@@ -26,12 +26,12 @@ public class ServiceService {
 
     public Service createService(Service service, String token) {
 
-        String email = jwtUtil.extractEmail(token);
+        String email = jwtUtil.extractEmail(token.replace("Bearer ", ""));
 
-        User freelancer = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        service.setFreelancer(freelancer);
+        service.setFreelancer(user);
 
         return serviceRepository.save(service);
     }

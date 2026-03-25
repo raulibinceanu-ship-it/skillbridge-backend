@@ -12,15 +12,10 @@ public class Service {
     private Long id;
 
     private String title;
-
     private String description;
-
     private Double price;
-
     private String category;
-
     private LocalDateTime createdAt = LocalDateTime.now();
-
     private String imageUrl;
 
     @ManyToOne
@@ -29,59 +24,25 @@ public class Service {
 
     public Service() {}
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public String getDescription() {
-        return description;
-    }
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
-    public Double getPrice() {
-        return price;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public User getFreelancer() {
-        return freelancer;
-    }
-
-    public void setFreelancer(User freelancer) {
-        this.freelancer = freelancer;
-    }
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
+    public User getFreelancer() { return freelancer; }
+    public void setFreelancer(User freelancer) { this.freelancer = freelancer; }
 }

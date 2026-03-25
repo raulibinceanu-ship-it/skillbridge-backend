@@ -21,9 +21,8 @@ public class ServiceController {
     @PostMapping
     public Service createService(
             @RequestBody Service service,
-            @RequestHeader("Authorization") String authHeader
+            @RequestHeader("Authorization") String token
     ) {
-        String token = authHeader.replace("Bearer ", "");
         return serviceService.createService(service, token);
     }
 
