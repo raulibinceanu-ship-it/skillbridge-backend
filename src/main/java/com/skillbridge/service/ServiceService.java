@@ -85,13 +85,16 @@ public class ServiceService {
 
         if (category != null && !category.isEmpty() && maxPrice != null) {
             result = serviceRepository
-                    .findByCategoryAndPriceLessThanEqual(category, maxPrice);
+                    .findByCategoryContainingIgnoreCaseAndPriceLessThanEqual(category, maxPrice);
+
         } else if (category != null && !category.isEmpty()) {
-            result = serviceRepository.findByCategory(category);
+            result = serviceRepository.findByCategoryContainingIgnoreCase(category);
+
         } else if (maxPrice != null) {
             result = serviceRepository.findByPriceLessThanEqual(maxPrice);
+
         } else {
-            result = serviceRepository.findAll();
+            result = serviceRepository.findAllByOrderByCreatedAtDesc();
         }
 
         return result.stream()
