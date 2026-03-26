@@ -37,7 +37,7 @@ public class ServiceService {
     }
 
     public List<Service> getAllServices() {
-        return serviceRepository.findAll();
+        return serviceRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public List<Service> getMyServices(String token) {
@@ -81,22 +81,22 @@ public class ServiceService {
 
     public List<Service> filterServices(String category, Double maxPrice) {
 
-        if (category != null && !category.isEmpty() &&
-                maxPrice != null) {
+        List<Service> result;
 
-            return serviceRepository
+        if (category != null && !category.isEmpty() && maxPrice != null) {
+            result = serviceRepository
                     .findByCategoryAndPriceLessThanEqual(category, maxPrice);
+        } else if (category != null && !category.isEmpty()) {
+            result = serviceRepository.findByCategory(category);
+        } else if (maxPrice != null) {
+            result = serviceRepository.findByPriceLessThanEqual(maxPrice);
+        } else {
+            result = serviceRepository.findAll();
         }
 
-        if (category != null && !category.isEmpty()) {
-            return serviceRepository.findByCategory(category);
-        }
-
-        if (maxPrice != null) {
-            return serviceRepository.findByPriceLessThanEqual(maxPrice);
-        }
-
-        return serviceRepository.findAll();
+        return result.stream()
+                .sorted((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()))
+                .toList();
     }
     public Service getServiceById(Long id) {
         return serviceRepository.findById(id)

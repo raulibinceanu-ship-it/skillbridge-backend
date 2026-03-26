@@ -10,4 +10,5 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findByCategory(String category);
     List<Service> findByPriceLessThanEqual(double price);
     List<Service> findByCategoryAndPriceLessThanEqual(String category, Double price);
+    List<Service> findAllByOrderByCreatedAtDesc();
 }
